@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import UIKit
 
 extension View {
     public func alwaysPopover<Content>(isPresented: Binding<Bool>,
-                                       arrows: [ArrowDirection] = [.any],
+                                       arrows: UIPopoverArrowDirection = .any,
                                        @ViewBuilder content: @escaping () -> Content) -> some View where Content : View {
         self.modifier(AlwaysPopoverModifier(isPresented: isPresented,
                                             arrowDirection: arrows,
