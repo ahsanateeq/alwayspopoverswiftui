@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 extension View {
-    public func alwaysPopover<Content>(isPresented: Binding<Bool>,
+    public func popoverView<Content>(isPresented: Binding<Bool>,
                                        arrows: UIPopoverArrowDirection = .any,
                                        background: Color? = nil,
                                        @ViewBuilder content: @escaping () -> Content) -> some View where Content : View {

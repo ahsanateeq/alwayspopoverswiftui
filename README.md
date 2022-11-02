@@ -13,7 +13,7 @@ URL:
 
 - Then use as modifier
 ```swift
-    .alwaysPopover(isPresented: $showsAlwaysPopover) {
+    .popoverView(isPresented: $showsAlwaysPopover) {
         Content() // Content for popover view
     }
 ```
@@ -27,9 +27,9 @@ URL:
     Button("Custom Always Popover") {
         showsAlwaysPopover = true
     }
-    .alwaysPopover(isPresented: $showsAlwaysPopover,
-                    arrows: UIPopoverArrowDirection.up,     // default arrow direction: .any
-                    background: Color.cyan) {               // default background color: nil
+    .popoverView(isPresented: $showsAlwaysPopover,
+                    arrows: UIPopoverArrowDirection.up, // default arrow direction: .any
+                    background: Color.cyan) {           // default background color: nil
         PopoverContent()
     }
 ```
