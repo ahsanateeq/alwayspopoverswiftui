@@ -27,7 +27,9 @@ URL:
     Button("Custom Always Popover") {
         showsAlwaysPopover = true
     }
-    .alwaysPopover(isPresented: $showsAlwaysPopover) {
+    .alwaysPopover(isPresented: $showsAlwaysPopover,
+                    arrows: UIPopoverArrowDirection.up,     // default arrow direction: .any
+                    background: Color.cyan) {               // default background color: nil
         PopoverContent()
     }
 ```

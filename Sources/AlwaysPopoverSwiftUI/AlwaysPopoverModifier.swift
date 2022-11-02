@@ -31,6 +31,7 @@ struct AlwaysPopoverModifier<PopoverContent>: ViewModifier where PopoverContent:
     
     let isPresented: Binding<Bool>
     let arrowDirection: UIPopoverArrowDirection
+    let background: Color?
     let contentBlock: () -> PopoverContent
     
     // Workaround for missing @StateObject in iOS 13.
@@ -42,6 +43,8 @@ struct AlwaysPopoverModifier<PopoverContent>: ViewModifier where PopoverContent:
     func body(content: Content) -> some View {
         if isPresented.wrappedValue {
             presentPopover()
+        } else {
+            dismissPopOver()
         }
         
         return content
@@ -51,6 +54,10 @@ struct AlwaysPopoverModifier<PopoverContent>: ViewModifier where PopoverContent:
     private func presentPopover() {
         let contentController = ContentViewController(rootView: contentBlock(), isPresented: isPresented)
         contentController.modalPresentationStyle = .popover
+        if let background = self.background {
+            let color = UIColor(background)
+            contentController.view.backgroundColor = color
+        }
         
         let view = store.anchorView
         guard let popover = contentController.popoverPresentationController else { return }
@@ -67,6 +74,12 @@ struct AlwaysPopoverModifier<PopoverContent>: ViewModifier where PopoverContent:
         } else {
             sourceVC.present(contentController, animated: true)
         }
+    }
+    
+    private func dismissPopOver() {
+        guard let sourceVC = store.anchorView.closestVC(),
+              let presentedVC = sourceVC.presentedViewController else { return }
+        presentedVC.dismiss(animated: true)
     }
     
     private struct InternalAnchorView: UIViewRepresentable {
