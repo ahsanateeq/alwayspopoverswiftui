@@ -8,7 +8,11 @@
 import SwiftUI
 
 extension View {
-    public func alwaysPopover<Content>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View where Content : View {
-        self.modifier(AlwaysPopoverModifier(isPresented: isPresented, contentBlock: content))
+    public func alwaysPopover<Content>(isPresented: Binding<Bool>,
+                                       arrows: [ArrowDirection] = [.any],
+                                       @ViewBuilder content: @escaping () -> Content) -> some View where Content : View {
+        self.modifier(AlwaysPopoverModifier(isPresented: isPresented,
+                                            arrowDirection: arrows,
+                                            contentBlock: content))
     }
 }

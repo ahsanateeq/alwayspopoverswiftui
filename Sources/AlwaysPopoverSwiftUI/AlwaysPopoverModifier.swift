@@ -6,10 +6,31 @@
 //
 
 import SwiftUI
+import UIKit
+
+public enum ArrowDirection {
+    case any, up, down, left, right
+    
+    var popoverDirection: UIPopoverArrowDirection {
+        switch self {
+        case .any:
+            return .any
+        case .up:
+            return .up
+        case .down:
+            return .down
+        case .left:
+            return .left
+        case .right:
+            return .right
+        }
+    }
+}
 
 struct AlwaysPopoverModifier<PopoverContent>: ViewModifier where PopoverContent: View {
     
     let isPresented: Binding<Bool>
+    let arrowDirection: [ArrowDirection]
     let contentBlock: () -> PopoverContent
     
     // Workaround for missing @StateObject in iOS 13.
@@ -36,6 +57,7 @@ struct AlwaysPopoverModifier<PopoverContent>: ViewModifier where PopoverContent:
         popover.sourceView = view
         popover.sourceRect = view.bounds
         popover.delegate = contentController
+        popover.permittedArrowDirections = arrowDirection.map({ $0.popoverDirection })
         
         guard let sourceVC = view.closestVC() else { return }
         if let presentedVC = sourceVC.presentedViewController {
